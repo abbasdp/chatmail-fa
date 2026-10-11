@@ -1,0 +1,630 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="./">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html"><link rel="search" title="Search" href="search.html"><link rel="next" title="Setting up a reverse proxy" href="proxy.html"><link rel="prev" title="chatmail relay documentation" href="index.html">
+        <link rel="prefetch" href="_static/chatmail.svg" as="image">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Setting up a chatmail relay - chatmail relay documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css" />
+    <link rel="stylesheet" type="text/css" href="_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">chatmail relay documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/chatmail.svg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">chatmail relay documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">Setting up a chatmail relay</a></li>
+<li class="toctree-l1"><a class="reference internal" href="proxy.html">Setting up a reverse proxy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migrate.html">Migrating to a new machine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Technical overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reverse_dns.html">Configuring reverse DNS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="related.html">Community developments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently asked questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="iponly.html">Hosting without DNS records</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/getting_started.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="setting-up-a-chatmail-relay">
+<h1>Setting up a chatmail relay<a class="headerlink" href="#setting-up-a-chatmail-relay" title="Link to this heading">¶</a></h1>
+<p>This section contains everything needed to setup a ready-to-use chatmail relay.
+The automated setup is designed and optimized for providing chatmail
+addresses for immediate permission-free onboarding through chat apps and bots.
+Chatmail addresses are automatically created at first login,
+after which the initially specified password is required
+for sending and receiving messages through them.</p>
+<section id="minimal-requirements-and-prerequisites">
+<h2>Minimal requirements and prerequisites<a class="headerlink" href="#minimal-requirements-and-prerequisites" title="Link to this heading">¶</a></h2>
+<p>You will need the following:</p>
+<ul class="simple">
+<li><p>A Debian 12 <strong>deployment server</strong> with reachable SMTP/SUBMISSIONS/IMAPS/HTTPS ports.
+IPv6 is encouraged if available. Chatmail relay servers only require
+1GB RAM, one CPU, and perhaps 10GB storage for a few thousand active
+chatmail addresses.</p></li>
+<li><p>A Linux or Unix <strong>build machine</strong> with key-based SSH access to the root
+user of the deployment server.
+You must add a passphrase-protected private key to your local ssh-agent because you
+can’t type in your passphrase during deployment.
+(An ed25519 private key is required due to an <a class="reference external" href="https://github.com/paramiko/paramiko/issues/2191">upstream bug in
+paramiko</a>)</p></li>
+<li><p>Control over a domain through a DNS provider of your choice
+(there is experimental support for <a class="reference internal" href="iponly.html#iponly"><span class="std std-ref">IP-only relays</span></a>).</p></li>
+</ul>
+</section>
+<section id="setup-with-scripts-cmdeploy">
+<span id="setup"></span><h2>Setup with <code class="docutils literal notranslate"><span class="pre">scripts/cmdeploy</span></code><a class="headerlink" href="#setup-with-scripts-cmdeploy" title="Link to this heading">¶</a></h2>
+<p>We use <code class="docutils literal notranslate"><span class="pre">chat.example.org</span></code> as the chatmail domain in the following
+steps. Please substitute it with your own domain.</p>
+<ol class="arabic">
+<li><p>Setup the initial DNS records for your deployment server.
+The following is an example in the
+familiar BIND zone file format with a TTL of 1 hour (3600 seconds).
+Please substitute your domain and IP addresses.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span><span class="o">.</span> <span class="mi">3600</span> <span class="n">IN</span> <span class="n">A</span> <span class="mf">198.51.100.5</span>
+<span class="n">chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span><span class="o">.</span> <span class="mi">3600</span> <span class="n">IN</span> <span class="n">AAAA</span> <span class="mi">2001</span><span class="p">:</span><span class="n">db8</span><span class="p">::</span><span class="mi">5</span>
+<span class="n">www</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span><span class="o">.</span> <span class="mi">3600</span> <span class="n">IN</span> <span class="n">CNAME</span> <span class="n">chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span><span class="o">.</span>
+<span class="n">mta</span><span class="o">-</span><span class="n">sts</span><span class="o">.</span><span class="n">chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span><span class="o">.</span> <span class="mi">3600</span> <span class="n">IN</span> <span class="n">CNAME</span> <span class="n">chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For experimental deployments using self-signed certificates,
+use a domain name starting with <code class="docutils literal notranslate"><span class="pre">_</span></code>
+(e.g. <code class="docutils literal notranslate"><span class="pre">_chat.example.org</span></code>).
+The <code class="docutils literal notranslate"><span class="pre">mta-sts</span></code> CNAME and <code class="docutils literal notranslate"><span class="pre">_mta-sts</span></code> TXT records
+are not needed for such domains.</p>
+</div>
+</li>
+<li><p>On your local PC, clone the repository and bootstrap the Python
+virtualenv.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">chatmail</span><span class="o">/</span><span class="n">relay</span>
+<span class="n">cd</span> <span class="n">relay</span>
+<span class="n">scripts</span><span class="o">/</span><span class="n">initenv</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+</li>
+<li><p>On your local build machine (PC), create a chatmail configuration file
+<code class="docutils literal notranslate"><span class="pre">chatmail.ini</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">init</span> <span class="n">chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span>  <span class="c1"># &lt;-- use your domain</span>
+</pre></div>
+</div>
+<p>To use self-signed TLS certificates
+instead of Let’s Encrypt,
+use a domain name starting with <code class="docutils literal notranslate"><span class="pre">_</span></code>
+(e.g. <code class="docutils literal notranslate"><span class="pre">scripts/cmdeploy</span> <span class="pre">init</span> <span class="pre">_chat.example.org</span></code>).
+Domains starting with <code class="docutils literal notranslate"><span class="pre">_</span></code> cannot obtain WebPKI certificates,
+so self-signed mode is derived automatically.
+This is useful for private or test deployments.
+See the <a class="reference internal" href="overview.html"><span class="doc">Technical overview</span></a>
+for details on certificate provisioning.</p>
+</li>
+<li><p>Verify that SSH root login to the deployment server server works:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">root</span><span class="nd">@chat</span><span class="o">.</span><span class="n">example</span><span class="o">.</span><span class="n">org</span>  <span class="c1"># &lt;-- use your domain</span>
+</pre></div>
+</div>
+</li>
+<li><p>From your local build machine, setup and configure the remote deployment server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p>This script will also check that you have all necessary DNS records.
+If DNS records are missing, it will recommend which you should
+configure at your DNS provider (it can take some time until they are
+public).</p>
+</li>
+</ol>
+</section>
+<section id="docker-installation">
+<h2>Docker installation<a class="headerlink" href="#docker-installation" title="Link to this heading">¶</a></h2>
+<p>There is experimental support for running chatmail via Docker.
+A monolithic image based on the above cmdeploy method is available <a class="reference external" href="https://github.com/chatmail/docker/pkgs/container/docker">through a separate repository</a>.
+See the <a class="reference external" href="https://github.com/chatmail/docker">chatmail/docker README</a> for full setup instructions.</p>
+</section>
+<section id="other-helpful-commands">
+<h2>Other helpful commands<a class="headerlink" href="#other-helpful-commands" title="Link to this heading">¶</a></h2>
+<p>To check the status of your deployment server running the chatmail service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">status</span>
+</pre></div>
+</div>
+<p>To display and check all recommended DNS records:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">dns</span>
+</pre></div>
+</div>
+<p>To test whether your chatmail service is working correctly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">test</span>
+</pre></div>
+</div>
+<p>To measure the performance of your chatmail service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">bench</span>
+</pre></div>
+</div>
+</section>
+<section id="modifying-the-home-page">
+<h2>Modifying the home page<a class="headerlink" href="#modifying-the-home-page" title="Link to this heading">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">cmdeploy</span> <span class="pre">run</span></code> also creates default static web pages and deploys them
+to a Nginx web server with:</p>
+<ul class="simple">
+<li><p>a default <code class="docutils literal notranslate"><span class="pre">index.html</span></code> along with a QR code that users can click to
+create an address on your chatmail relay</p></li>
+<li><p>a default <code class="docutils literal notranslate"><span class="pre">info.html</span></code> that is linked from the home page</p></li>
+<li><p>a default <code class="docutils literal notranslate"><span class="pre">policy.html</span></code> that is linked from the home page</p></li>
+</ul>
+<p>All <code class="docutils literal notranslate"><span class="pre">.html</span></code> files are generated by the according markdown <code class="docutils literal notranslate"><span class="pre">.md</span></code> file
+in the <code class="docutils literal notranslate"><span class="pre">www/src</span></code> directory.</p>
+</section>
+<section id="refining-the-web-pages">
+<h2>Refining the web pages<a class="headerlink" href="#refining-the-web-pages" title="Link to this heading">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">webdev</span>
+</pre></div>
+</div>
+<p>This starts a local live development cycle for chatmail web pages:</p>
+<ul class="simple">
+<li><p>uses the <code class="docutils literal notranslate"><span class="pre">www/src/page-layout.html</span></code> file for producing static HTML
+pages from <code class="docutils literal notranslate"><span class="pre">www/src/*.md</span></code> files</p></li>
+<li><p>continously builds the web presence reading files from <code class="docutils literal notranslate"><span class="pre">www/src</span></code>
+directory and generating HTML files and copying assets to the
+<code class="docutils literal notranslate"><span class="pre">www/build</span></code> directory.</p></li>
+<li><p>Starts a browser window automatically where you can “refresh” as
+needed.</p></li>
+</ul>
+</section>
+<section id="custom-web-pages">
+<h2>Custom web pages<a class="headerlink" href="#custom-web-pages" title="Link to this heading">¶</a></h2>
+<p>You can skip uploading a web page by setting <code class="docutils literal notranslate"><span class="pre">www_folder=disabled</span></code> in
+<code class="docutils literal notranslate"><span class="pre">chatmail.ini</span></code>.</p>
+<p>If you want to manage your web pages outside this git repository, you
+can set <code class="docutils literal notranslate"><span class="pre">www_folder</span></code> in <code class="docutils literal notranslate"><span class="pre">chatmail.ini</span></code> to a custom directory on your
+computer. <code class="docutils literal notranslate"><span class="pre">cmdeploy</span> <span class="pre">run</span></code> will upload it as the server’s home page, and
+if it contains a <code class="docutils literal notranslate"><span class="pre">src/index.md</span></code> file, will build it with hugo.</p>
+</section>
+<section id="disable-automatic-address-creation">
+<h2>Disable automatic address creation<a class="headerlink" href="#disable-automatic-address-creation" title="Link to this heading">¶</a></h2>
+<p>If you need to stop address creation, e.g. because some script is wildly
+creating addresses, login with ssh to the deployment machine and run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">chatmail</span><span class="o">-</span><span class="n">nocreate</span>
+</pre></div>
+</div>
+<p>Chatmail address creation will be denied while this file is present.</p>
+</section>
+<section id="configurable-system-limits">
+<span id="system-limits"></span><h2>Configurable System Limits<a class="headerlink" href="#configurable-system-limits" title="Link to this heading">¶</a></h2>
+<section id="limits-for-auto-rejecting-address-creation">
+<h3>Limits for auto-rejecting address creation<a class="headerlink" href="#limits-for-auto-rejecting-address-creation" title="Link to this heading">¶</a></h3>
+<p>A relay refuses creation of new addresses
+when the machine runs low on resources,
+but existing addresses keep working.</p>
+<p>Three <code class="docutils literal notranslate"><span class="pre">chatmail.ini</span></code> settings control this,
+shown here with their defaults:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">max_load_1m</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">min_available_memory</span> <span class="o">=</span> <span class="mi">200</span><span class="n">M</span>
+<span class="n">min_free_disk_space</span> <span class="o">=</span> <span class="mi">1</span><span class="n">G</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">max_load_1m</span></code> is the maximum 1-minute load average,
+as reported by <code class="docutils literal notranslate"><span class="pre">uptime</span></code>;
+it counts processes waiting for disk I/O as well as for CPU.
+It is deliberately not scaled by the number of CPUs
+because I/O rather than CPU is what typically limits a relay.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_available_memory</span></code> is the minimum memory available without swapping.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">min_free_disk_space</span></code> is the minimum free disk space
+on the file system holding the mailboxes.</p></li>
+</ul>
+<p>The defaults suit the small machine described in
+<a class="reference internal" href="#minimal-requirements-and-prerequisites">Minimal requirements and prerequisites</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you run a bigger machine,
+raise <code class="docutils literal notranslate"><span class="pre">max_load_1m</span></code> after watching <code class="docutils literal notranslate"><span class="pre">uptime</span></code> under typical load.</p>
+</div>
+<p>Rejections are logged by the <code class="docutils literal notranslate"><span class="pre">doveauth</span></code> service,
+so you can check whether a limit is set too tightly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">journalctl</span> <span class="o">-</span><span class="n">u</span> <span class="n">doveauth</span> <span class="o">--</span><span class="n">grep</span> <span class="s1">'registration rejected'</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">mtail_address</span></code> is set, rejections are also counted
+in the <code class="docutils literal notranslate"><span class="pre">rejected_registrations</span></code> metric.</p>
+</section>
+<section id="overall-imap-and-smtp-connection-limits">
+<h3>Overall IMAP and SMTP connection limits<a class="headerlink" href="#overall-imap-and-smtp-connection-limits" title="Link to this heading">¶</a></h3>
+<p>Two further settings bound how many connections
+the relay accepts at all, again shown with their defaults:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">max_imap_connections</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">max_smtp_connections</span> <span class="o">=</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">max_imap_connections</span></code> becomes the Dovecot imap process limit,
+and <code class="docutils literal notranslate"><span class="pre">max_smtp_connections</span></code> the Postfix process limit
+on each of the submission and smtps ports.
+A single client IP may use up to a fifth of <code class="docutils literal notranslate"><span class="pre">max_smtp_connections</span></code>.
+Each connection costs memory,
+so these limits defend the relay against running out of RAM.</p>
+<p>Unless <code class="docutils literal notranslate"><span class="pre">imap_compress</span></code> is enabled,
+an IMAP connection that is idle for <code class="docutils literal notranslate"><span class="pre">imap_hibernate_timeout</span></code>
+is handed over to the <code class="docutils literal notranslate"><span class="pre">imap-hibernate</span></code> process
+and does not count towards <code class="docutils literal notranslate"><span class="pre">max_imap_connections</span></code>,
+which is why a relay can serve far more IMAP clients
+than this setting suggests.</p>
+<p>If you run a large relay with 10k or 100k’s of addresses,
+check current connection counts before upgrading
+and set the limits accordingly.</p>
+<p>To see how close a running relay is to these two limits,
+copy <code class="docutils literal notranslate"><span class="pre">scripts/check-connections.sh</span></code> from the relay repository
+onto the relay and run it there:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">imap</span>             <span class="mi">5</span>  <span class="n">ports</span> <span class="mi">143</span><span class="p">,</span><span class="mi">993</span>   <span class="p">(</span><span class="n">max_imap_connections</span><span class="p">)</span>
+                 <span class="mi">5</span>  <span class="n">dovecot</span> <span class="n">sessions</span><span class="p">,</span> <span class="mi">0</span> <span class="n">of</span> <span class="n">them</span> <span class="ow">in</span> <span class="n">an</span> <span class="n">active</span> <span class="n">imap</span> <span class="n">process</span>
+<span class="n">submission</span>       <span class="mi">0</span>  <span class="n">ports</span> <span class="mi">465</span><span class="p">,</span><span class="mi">587</span>   <span class="p">(</span><span class="n">max_smtp_connections</span> <span class="n">per</span> <span class="n">port</span><span class="p">)</span>
+<span class="n">incoming</span>         <span class="mi">0</span>  <span class="n">port</span> <span class="mi">25</span>         <span class="p">(</span><span class="kn">from</span><span class="w"> </span><span class="nn">other</span> <span class="n">relays</span><span class="p">,</span> <span class="n">no</span> <span class="n">chatmail</span><span class="o">.</span><span class="n">ini</span> <span class="n">limit</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>It counts established sockets with <code class="docutils literal notranslate"><span class="pre">ss</span></code>
+and cross-checks the IMAP number against <code class="docutils literal notranslate"><span class="pre">doveadm</span> <span class="pre">who</span></code>.</p>
+</section>
+</section>
+<section id="running-a-relay-with-self-signed-certificates">
+<h2>Running a relay with self-signed certificates<a class="headerlink" href="#running-a-relay-with-self-signed-certificates" title="Link to this heading">¶</a></h2>
+<p>Use a domain name starting with <code class="docutils literal notranslate"><span class="pre">_</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">_chat.example.org</span></code>)
+to run a relay with self-signed certificates.
+Domains starting with <code class="docutils literal notranslate"><span class="pre">_</span></code> cannot obtain WebPKI certificates
+so the relay automatically uses self-signed certificates
+and all other relays will accept connections from it
+without requiring certificate verification.
+This is useful for experimental setups and testing.</p>
+</section>
+<section id="running-a-relay-with-externally-managed-certificates">
+<span id="external-tls"></span><h2>Running a relay with externally managed certificates<a class="headerlink" href="#running-a-relay-with-externally-managed-certificates" title="Link to this heading">¶</a></h2>
+<p>If you already have a TLS certificate manager
+(e.g. Traefik, certbot, or another ACME client)
+running on the deployment server,
+you can configure the relay to use those certificates
+instead of the built-in <code class="docutils literal notranslate"><span class="pre">acmetool</span></code>.</p>
+<p>Set the following in <code class="docutils literal notranslate"><span class="pre">chatmail.ini</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tls_external_cert_and_key</span> <span class="o">=</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">fullchain</span><span class="o">.</span><span class="n">pem</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">privkey</span><span class="o">.</span><span class="n">pem</span>
+</pre></div>
+</div>
+<p>The paths must point to certificate and key files
+on the deployment server.
+During <code class="docutils literal notranslate"><span class="pre">cmdeploy</span> <span class="pre">run</span></code>, these paths are written into
+the Postfix, Dovecot, and Nginx configurations.
+No certificate files are transferred from the build machine —
+they must already exist on the server,
+managed by your external certificate tool.</p>
+<p>The deploy will verify that both files exist on the server.
+<code class="docutils literal notranslate"><span class="pre">acmetool</span></code> is <strong>not</strong> installed or run in this mode.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You are responsible for certificate renewal.
+When the certificate file changes on disk,
+all relay services pick up the new certificate automatically
+via a systemd path watcher installed during deploy.
+The watcher uses inotify, which does not cross bind-mount boundaries.
+If you use such a setup, you must trigger the reload explicitly after renewal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">start</span> <span class="n">tls</span><span class="o">-</span><span class="n">cert</span><span class="o">-</span><span class="n">reload</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="migrating-to-a-new-build-machine">
+<h2>Migrating to a new build machine<a class="headerlink" href="#migrating-to-a-new-build-machine" title="Link to this heading">¶</a></h2>
+<p>To move or add a build machine,
+clone the relay repository on the new build machine, and copy the <code class="docutils literal notranslate"><span class="pre">chatmail.ini</span></code> file from the old build machine.
+Make sure <code class="docutils literal notranslate"><span class="pre">rsync</span></code> is installed, then initialize the environment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">scripts</span><span class="o">/</span><span class="n">initenv</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>Run safety checks before a new deployment:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">dns</span>
+<span class="o">./</span><span class="n">scripts</span><span class="o">/</span><span class="n">cmdeploy</span> <span class="n">status</span>
+</pre></div>
+</div>
+<p>If you keep multiple build machines (ie laptop and desktop), keep <code class="docutils literal notranslate"><span class="pre">chatmail.ini</span></code> in sync between
+them.</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="proxy.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Setting up a reverse proxy</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2025, chatmail collective
+            </div>
+            Made with <a href="../../index.html">Sphinx</a> and <a class="muted-link" href="../../index.html">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Setting up a chatmail relay</a><ul>
+<li><a class="reference internal" href="#minimal-requirements-and-prerequisites">Minimal requirements and prerequisites</a></li>
+<li><a class="reference internal" href="#setup-with-scripts-cmdeploy">Setup with <code class="docutils literal notranslate"><span class="pre">scripts/cmdeploy</span></code></a></li>
+<li><a class="reference internal" href="#docker-installation">Docker installation</a></li>
+<li><a class="reference internal" href="#other-helpful-commands">Other helpful commands</a></li>
+<li><a class="reference internal" href="#modifying-the-home-page">Modifying the home page</a></li>
+<li><a class="reference internal" href="#refining-the-web-pages">Refining the web pages</a></li>
+<li><a class="reference internal" href="#custom-web-pages">Custom web pages</a></li>
+<li><a class="reference internal" href="#disable-automatic-address-creation">Disable automatic address creation</a></li>
+<li><a class="reference internal" href="#configurable-system-limits">Configurable System Limits</a><ul>
+<li><a class="reference internal" href="#limits-for-auto-rejecting-address-creation">Limits for auto-rejecting address creation</a></li>
+<li><a class="reference internal" href="#overall-imap-and-smtp-connection-limits">Overall IMAP and SMTP connection limits</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-a-relay-with-self-signed-certificates">Running a relay with self-signed certificates</a></li>
+<li><a class="reference internal" href="#running-a-relay-with-externally-managed-certificates">Running a relay with externally managed certificates</a></li>
+<li><a class="reference internal" href="#migrating-to-a-new-build-machine">Migrating to a new build machine</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/scripts/furo.js"></script>
+    </body>
+</html>

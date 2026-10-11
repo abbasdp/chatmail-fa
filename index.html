@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/main.css"><link type="application/atom+xml" rel="alternate" href="feed.xml" title="Chatmail" /><meta name="description" content="Chatmail provides FOSS infrastructure  for interoperable, secure, speedy and reliable end-to-end encrypted messaging. Check out clients as Arcane Chat, Bots or Delta Chat today!" />
+  <meta property="og:title" content="Chatmail">
+  <meta property="og:description" content="Chatmail provides FOSS infrastructure  for interoperable, secure, speedy and reliable end-to-end encrypted messaging. Check out clients as Arcane Chat, Bots or Delta Chat today!">
+  <meta property="og:image" content="assets/og-preview.png">
+  <meta property="og:url" content="https://chatmail.at/">
+  <meta name="twitter:card" content="summary">
+
+</head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="index.html">Chatmail</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="index.html">Home</a><a class="page-link" href="clients.html">Clients</a><a class="page-link" href="relays.html">Relays</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home">
+
+  <p align="center">
+<a href="https://github.com/chatmail"><img alt="Chatmail logo" src="assets/logos/chatmail.svg" href="https://github.com/chatmail" width="130" /></a>
+</p>
+
+<p align="center" style="font-size: 1.5em; margin-bottom: 2em;">
+<b>Chatmail makes e-mail fun, secure and instant</b><br />
+</p>
+
+<p>The Chatmail project <a href="https://github.com/chatmail">develops and releases</a> 
+FOSS infrastructure templates and libraries for interopable and secure instant e-mail messaging, 
+enforcing <strong>automatic end-to-end encryption and metadata minimization</strong>, 
+with optional ephemeral Peer-to-Peer messaging to top it off. 
+The future is now: Chatmail makes e-mail fun, secure and instant.</p>
+
+<p>Chatmail is a community-driven project that is raising the floor for interoperable FOSS alternatives
+to centralized proprietary instant messaging services. 
+Chatmail transport operators, as well as app and bot developers, and all of their users, 
+benefit from our efforts. 
+We are also contributing to raising and fixing the floor for billions of users who unknowingly depend 
+on the integrity, resilience, security and reliability of the e-mail system.</p>
+
+<h2 id="chatmail-relays-interoperable-secure-and-cheap-to-run">Chatmail relays: interoperable, secure and cheap to run</h2>
+
+<p><a href="https://github.com/chatmail/server/blob/main/README.md" class="hilite">chatmail/relay</a>
+helps to automatically deploy <strong>a minimal Mail Transfer Agent (MTA) 
+that only transmits end-to-end encrypted and metadata-minimized <a href="https://www.rfc-editor.org/rfc/rfc5322">Internet Messages</a></strong>. 
+Chatmail relays provide ephemeral transport only, not long-term storage,
+and rely on cryptographic interoperability standards to interact with other MTAs, 
+entirely cutting out the need for IP reputation and spam-checking machinery.</p>
+
+<p>Chatmail relays are therefore cheap to run and use:</p>
+
+<ul>
+  <li>
+    <p>Hosting costs for 100K relay users are around half a Cent per user and year.</p>
+  </li>
+  <li>
+    <p>System administration costs are near-zero after setup.</p>
+  </li>
+  <li>
+    <p>Apps and bots can freely use instant chatmail addresses,
+avoiding classic e-mail server rate limits.</p>
+  </li>
+</ul>
+
+<p align="center" style="margin-top: 1.2em; margin-bottom: 2em;">
+<a href="relays.html" class="niceButton">Known public chatmail relays</a>
+</p>
+
+<h2 id="chatmail-core-reliable-rust-library-for-chat-apps-and-bots">Chatmail core: reliable Rust library for chat apps and bots</h2>
+
+<p><a href="https://github.com/chatmail/core/blob/main/README.md" class="hilite">chatmail/core</a> 
+is a cross-platform infrastructure Rust library 
+integrated by many chat bots and higher level applications, 
+<strong>allowing secure participation in the globally scaled e-mail relay network</strong>. 
+Chatmail core offers a high level JSON-RPC API for managing contacts and chats,
+and for sending and receiving instant messages via e-mail and P2P realtime messages,
+while quietly taking care of many low-level details:</p>
+
+<ul>
+  <li>
+    <p>secure TLS setup with DNS caching and other resiliency features</p>
+  </li>
+  <li>
+    <p>robust SMTP and IMAP connection handling</p>
+  </li>
+  <li>
+    <p>safe MIME and OpenPGP parsing and e-mail building</p>
+  </li>
+  <li>
+    <p>reliable Peer-to-Peer <a href="index.html">Iroh networking</a></p>
+  </li>
+</ul>
+
+<p>We are helping to maintain some of the involved 600 Rust dependencies 
+and regularly provide upstream bug reports and fixes.</p>
+
+<p align="center" style="margin-top: 1.2em; margin-bottom: 2em;">
+<a href="clients.html" class="niceButton">Gallery of Clients and Bots</a>
+</p>
+
+</div>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="index.html"></data>
+
+  <div class="wrapper">
+    <a href="privacy/index.html">privacy policy</a>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
